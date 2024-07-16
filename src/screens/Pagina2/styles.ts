@@ -61,10 +61,10 @@ export const StyledPicker = styled(Picker)`
 `;
 
 export const ItemPicker = styled(Picker.Item)`
-    label{
+    
     font-size: 18px;
     font-weight: bold;
     border: 1px ${({ theme }) => theme.colors.gray};
     font-style: italic;
-    }
+
 `
