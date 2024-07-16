@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { Picker } from '@react-native-picker/picker';
+import DatePicker from 'react-native-datepicker';
 
 export const Container = styled.View`
   flex: 1;
@@ -45,26 +46,30 @@ export const Input = styled.TextInput`
     `;
 
 export const ViewPicker = styled.View`
-    width: 80%;
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px ${({ theme }) => theme.colors.gray};
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-`
-
-export const StyledPicker = styled(Picker)`
-    width: 100%;
-    height: 60px;
-    padding: 10px 20px;
+  width: 80%;
+  height: 60px;
+  background-color: transparent;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  justify-content: center;
 `;
 
-export const ItemPicker = styled(Picker.Item)`
-    
-    font-size: 18px;
-    font-weight: bold;
-    border: 1px ${({ theme }) => theme.colors.gray};
-    font-style: italic;
+export const StyledPicker = styled(Picker)`
+  width: 100%;
+  height: 100%;
+  color: black; /* Ajuste conforme a cor desejada */
+`;
 
-`
+export const DateInput = styled(DatePicker)`
+  width: 80%;
+  height: 60px;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  font-style: italic;
+`;
