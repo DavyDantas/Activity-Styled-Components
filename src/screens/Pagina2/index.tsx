@@ -1,12 +1,23 @@
 import React from 'react';
-import { Container, StyledText, StyledButton, ButtonText, Input, StyledPicker, ViewPicker, DateInput } from './styles';
+import { Container, StyledText, StyledButton, ButtonText, Input, StyledPicker, ViewPicker, DateInputText, DateInputWrapper } from './styles';
 import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-datepicker';
+import { TouchableOpacity, Platform, View } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function App() {
-  const [selectedValue, setSelectedValue] = React.useState("");
+  const [selectedValue, setSelectedValue] = React.useState(" ");
   const [date, setDate] = React.useState(new Date());
+  const [show, setShow] = React.useState(false);
 
+  const onChange = (event, selectedDate: Date) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
   return (
     <Container>
       <StyledText>Cadastro de Tarefa</StyledText>
@@ -16,7 +27,7 @@ export default function App() {
       <ViewPicker>
         <StyledPicker
           selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          onValueChange={(itemValue: unknown) => setSelectedValue(itemValue as string)}
         >
           <Picker.Item label="Categoria" value="" color="#9EA0A4" />
           <Picker.Item label="categoria1" value="categoria1" />
@@ -24,15 +35,21 @@ export default function App() {
         </StyledPicker>
       </ViewPicker>
       
-      <DateInput
-        date={date}
-        mode="date"
-        placeholder="Selecione a data"
-        format="DD/MM/YYYY"
-        confirmBtnText="Confirmar"
-        cancelBtnText="Cancelar"
-        onDateChange={(selectedDate) => setDate(selectedDate)}
-      />  
+      <DateInputWrapper>
+        <TouchableOpacity onPress={showDatepicker}>
+          <DateInputText>{date.toDateString()}</DateInputText>
+        </TouchableOpacity>
+      </DateInputWrapper>
+
+      {show && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
       <StyledButton onPress={() => alert('Botão pressionado!')}>
         <ButtonText>Cadastrar</ButtonText>
       </StyledButton>

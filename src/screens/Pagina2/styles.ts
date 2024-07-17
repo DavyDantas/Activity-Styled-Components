@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export const Container = styled.View`
   flex: 1;
@@ -58,18 +58,23 @@ export const ViewPicker = styled.View`
 export const StyledPicker = styled(Picker)`
   width: 100%;
   height: 100%;
-  color: black; /* Ajuste conforme a cor desejada */
+  color: black;
 `;
 
-export const DateInput = styled(DatePicker)`
+export const DateInputWrapper = styled.View`
   width: 80%;
   height: 60px;
   background-color: transparent;
   border-radius: 5px;
   padding: 10px 20px;
   margin-bottom: 20px;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  justify-content: center;
+`;
+
+export const DateInputText = styled.Text`
   font-size: 18px;
   font-weight: bold;
-  border: 1px solid ${({ theme }) => theme.colors.gray};
+  color: black;
   font-style: italic;
 `;
