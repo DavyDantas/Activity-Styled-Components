@@ -3,13 +3,22 @@ import { Container, StyledText, StyledButton, ButtonText, Input, StyledPicker, V
 import { Picker } from '@react-native-picker/picker';
 import { TouchableOpacity, Platform, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Link } from 'expo-router'
 
 export default function App() {
   const [selectedValue, setSelectedValue] = React.useState(" ");
   const [date, setDate] = React.useState(new Date());
   const [show, setShow] = React.useState(false);
 
-  const onChange = (event, selectedDate: Date) => {
+  const stringDate = (date: Date) => {
+    var day = date.getDate()
+    var month = date.getUTCMonth() + 1
+    var year = date.getFullYear()
+
+    return `${day}/${month}/${year}`
+  }
+
+  const onChange = (event: unknown, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
@@ -37,7 +46,7 @@ export default function App() {
       
       <DateInputWrapper>
         <TouchableOpacity onPress={showDatepicker}>
-          <DateInputText>{date.toDateString()}</DateInputText>
+          <DateInputText>Data: {stringDate(date)}</DateInputText>
         </TouchableOpacity>
       </DateInputWrapper>
 
@@ -50,8 +59,8 @@ export default function App() {
         />
       )}
 
-      <StyledButton onPress={() => alert('Botão pressionado!')}>
-        <ButtonText>Cadastrar</ButtonText>
+      <StyledButton >
+        <ButtonText> <Link href="src/screens/Home/index">Cadastrar</Link></ButtonText>
       </StyledButton>
     </Container>
   );
