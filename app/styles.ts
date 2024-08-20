@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: #1DB863;
     align-items: center;
 `;
 
@@ -35,7 +35,7 @@ export const Input = styled.TextInput`
 export const Button = styled.TouchableOpacity`
     width: 70%;
     height: 60px;
-    background-color: ${({ theme }) => theme.colors.gray};
+    background-color: #666666;
     justify-content: center;
     align-items: center;
 `;

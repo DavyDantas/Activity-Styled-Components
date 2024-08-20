@@ -1,41 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Header, TitleMain, TextSimple} from './styleList'
-import ItemList from '../../components/itemList'
-// import { getTarefas,deleteTarefas,updateTarefaFeita } from '../../services/TarefaService';
+import { Container, Header, TitleMain, TextSimple } from './styleList';
+import ItemList from '../../components/itemList';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
-
 export default function ListaTarefas() {
 
-    interface Tarefa {
-        id: number;
-        nome_tarefa: string;
-        descricao: string;
-        data: string;
-        feita: boolean;
-      }
+  interface Tarefa {
+    id: number;
+    nome_tarefa: string;
+    descricao: string;
+    data: string;
+    feita: boolean;
+  }
 
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
-  const router = useRouter();
-  const params = useLocalSearchParams(); // Para detectar mudanças nos parâmetros da rota, se aplicável
-  
-  async function handleDelete(id: number) {
-    
-  }
 
-  async function handleCheck(id: number, checked: boolean) {
-    
-  }
+  useEffect(() => {
+    // Função para buscar dados de tarefas simulada
+    const buscarDadosTarefas = async () => {
+      const tarefasIniciais: Tarefa[] = [
+        { id: 1, nome_tarefa: 'Tarefa 1', descricao: 'Descrição da tarefa 1', data: '2021-10-10', feita: false },
+        { id: 2, nome_tarefa: 'Tarefa 2', descricao: 'Descrição da tarefa 2', data: '2021-10-10', feita: true },
+        { id: 3, nome_tarefa: 'Tarefa 3', descricao: 'Descrição da tarefa 3', data: '2021-10-10', feita: false },
+      ];
+      setTarefas(tarefasIniciais);
+    };
 
-  async function buscarDadosTarefas() {
-    
-  }
-
-  useEffect(() => { 
     buscarDadosTarefas();
-  }, [router,params]);
-  
+  }, []);
+
+  const handleDelete = (id: number) => {
+    setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+  };
+
+  const handleCheck = (id: number, feita: boolean) => {
+    setTarefas(prevTarefas => 
+      prevTarefas.map(tarefa => 
+        tarefa.id === id ? { ...tarefa, feita: !feita } : tarefa
+      )
+    );
+  };
+
   return (
     <Container>
       <Header>
@@ -49,11 +55,11 @@ export default function ListaTarefas() {
             id={item.id} 
             text={item.nome_tarefa} 
             checkedItem={item.feita}
-            onCheck={handleCheck}
-            onDelete={handleDelete} // Passa a função de deleção como prop
+            onCheck={() => handleCheck(item.id, item.feita)}
+            onDelete={() => handleDelete(item.id)}
           />
         )}
-        keyExtractor={(t) => t.id.toString()} 
+        keyExtractor={(item) => item.id.toString()} 
       />
     </Container>
   );

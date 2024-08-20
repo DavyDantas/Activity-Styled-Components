@@ -1,21 +1,66 @@
 import React from 'react';
-import { Container, StyledText, StyledButton, ButtonText, Input, StyledPicker } from './styleForm';
+import { Container, StyledText, StyledButton, ButtonText, Input, StyledPicker, ViewPicker, DateInputText, DateInputWrapper } from './styleForm';
 import { Picker } from '@react-native-picker/picker';
+import { TouchableOpacity, Platform, View } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Link } from 'expo-router'
 
 export default function App() {
+  const [selectedValue, setSelectedValue] = React.useState(" ");
+  const [date, setDate] = React.useState(new Date());
+  const [show, setShow] = React.useState(false);
+
+  const stringDate = (date: Date) => {
+    var day = date.getDate()
+    var month = date.getUTCMonth() + 1
+    var year = date.getFullYear()
+
+    return `${day}/${month}/${year}`
+  }
+
+  const onChange = (event: unknown, selectedDate: Date | undefined) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
   return (
     <Container>
       <StyledText>Cadastro de Tarefa</StyledText>
       <Input placeholder="Título" />
       <Input placeholder="Descrição" />
-      <StyledPicker>
-        <Picker.Item label="Opção 1" value="option1" />
-        <Picker.Item label="Opção 2" value="option2" />
-        <Picker.Item label="Opção 3" value="option3" />
-      </StyledPicker>
-      <Input placeholder="Data" />  
-      <StyledButton onPress={() => alert('Botão pressionado!')}>
-        <ButtonText>Cadastrar</ButtonText>
+      
+      <ViewPicker>
+        <StyledPicker
+          selectedValue={selectedValue}
+          onValueChange={(itemValue: unknown) => setSelectedValue(itemValue as string)}
+        >
+          <Picker.Item label="Categoria" value="" color="#9EA0A4" />
+          <Picker.Item label="categoria1" value="categoria1" />
+          <Picker.Item label="categoria2" value="categoria2" />
+        </StyledPicker>
+      </ViewPicker>
+      
+      <DateInputWrapper>
+        <TouchableOpacity onPress={showDatepicker}>
+          <DateInputText>Data: {stringDate(date)}</DateInputText>
+        </TouchableOpacity>
+      </DateInputWrapper>
+
+      {show && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
+      <StyledButton >
+        <ButtonText> <Link href="/screens/lista">Cadastrar</Link></ButtonText>
       </StyledButton>
     </Container>
   );

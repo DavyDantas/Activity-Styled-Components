@@ -7,8 +7,8 @@ interface PropsButton  {
   checkedItem?: boolean;
   text?: string;
   id: number;
-  onDelete: (id: number) => Promise<void>;
-  onCheck: (id: number, checked: boolean) => Promise<void>;
+  onDelete: (id: number) => void;
+  onCheck: (id: number, checked: boolean) => void;
 }
 
 
